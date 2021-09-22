@@ -5,26 +5,20 @@ import {Input} from '../Input';
 
 import { Form } from './styles';
 import { FiCheckSquare } from 'react-icons/fi';
-import { Foodie } from '../../Contexts/FoodContext';
+import { useFood } from '../../hooks/useFood';
 
-interface ModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-  handleUpdateFood: (food: Foodie) => void;
-  editingFood: any;
-}
+function ModalEditFood() {
+  const {isEditModalOpen, toggleEditModal, editingFood, handleUpdateFood} = useFood();
 
-function ModalEditFood({isOpen, onRequestClose, handleUpdateFood, editingFood} : ModalProps) {
-  
   const formRef = useRef(null);
 
   async function handleSubmit(data:any) {
     handleUpdateFood(data);
-    onRequestClose();
+    toggleEditModal();
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+    <Modal isOpen={isEditModalOpen} onRequestClose={toggleEditModal}>
       <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />

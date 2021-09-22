@@ -5,25 +5,20 @@ import { Form } from './styles';
 import { Modal } from '../Modal';
 import { Input } from '../Input';
 import { FormHandles } from '@unform/core';
-import { Foodie } from '../../Contexts/FoodContext';
+import { useFood } from '../../hooks/useFood';
 
-interface ModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-  handleAddFood: (food: Foodie) => void;
-}
-
-function ModalAddFood({isOpen, onRequestClose, handleAddFood}: ModalProps) {
+function ModalAddFood() {
+  const {isModalOpen, toggleModal, handleAddFood} = useFood();
 
   const formRef = useRef<FormHandles>(null);
 
   async function handleSubmit(data: any) {
     handleAddFood(data);
-    onRequestClose();
+    toggleModal();
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+    <Modal isOpen={isModalOpen} onRequestClose={toggleModal}>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <h1>Novo Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />

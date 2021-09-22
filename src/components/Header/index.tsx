@@ -2,12 +2,11 @@
 import { Container } from './styles';
 import Logo from '../../assets/logo.svg';
 import { FiPlusSquare } from 'react-icons/fi';
+import { useFood } from '../../hooks/useFood';
 
-interface HeaderProps{
-  openModal: () => void;
-}
+function Header() {
+  const {toggleModal} = useFood();
 
-function Header({openModal}: HeaderProps) {
   return (
     <Container>
       <header>
@@ -16,7 +15,7 @@ function Header({openModal}: HeaderProps) {
           <div>
             <button
               type="button"
-              onClick={openModal}
+              onClick={toggleModal}
             >
               <div className="text">Novo Prato</div>
               <div className="icon">
