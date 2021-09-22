@@ -5,14 +5,13 @@ import {Food} from '../../components/Food';
 
 
 import { FoodsContainer } from './styles'
-import { FoodContextProvider} from '../../Contexts/FoodContext';
 import { useFood } from '../../hooks/useFood';
 
 function Dashboard() {
   const {foods, handleDeleteFood, handleEditFood} = useFood();
 
   return (
-    <FoodContextProvider>
+    <>
       <Header/>
       <ModalAddFood/>
       <ModalEditFood/>
@@ -28,7 +27,7 @@ function Dashboard() {
             />
           ))}
       </FoodsContainer>
-    </FoodContextProvider>
+    </>
   );
 };
 
