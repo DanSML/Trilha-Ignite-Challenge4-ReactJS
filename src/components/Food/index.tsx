@@ -3,18 +3,11 @@ import { useState } from 'react';
 
 import { FiEdit3, FiTrash } from 'react-icons/fi';
 import { Container } from './styles';
-
-interface Food {
-  id: number,
-  name: string,
-  description: string,
-  price: number,
-  image: string
-}
+import { Foodie } from '../../Contexts/FoodContext';
 
 interface FunctionalFoodProps {
-  food: Food,
-  handleEditFood: (food: Food) => void,
+  food: Foodie,
+  handleEditFood: (food: Foodie) => void,
   handleDeleteFood: (id: number) => void,
 }
 

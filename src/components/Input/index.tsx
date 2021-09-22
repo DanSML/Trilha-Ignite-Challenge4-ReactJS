@@ -10,9 +10,9 @@ import { useField } from '@unform/core';
 import { IconType } from "react-icons/lib";
 import { Container } from './styles';
 
-interface InputProps{
+interface InputProps extends React.HTMLProps<HTMLInputElement>{
   name: string;
-  icon: IconType;
+  icon?: IconType;
 } 
 
 function Input({ name, icon: Icon, ...rest }: InputProps){

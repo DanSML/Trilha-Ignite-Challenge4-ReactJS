@@ -1,29 +1,25 @@
-import { Component, createRef } from 'react';
+import { useRef } from 'react';
 import { FiCheckSquare } from 'react-icons/fi';
 
 import { Form } from './styles';
 import { Modal } from '../Modal';
 import { Input } from '../Input';
+import { FormHandles } from '@unform/core';
+import { Foodie } from '../../Contexts/FoodContext';
 
 interface ModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  handleAddFood: (food: Foodie) => void;
 }
 
-function ModalAddFood({isOpen, onRequestClose}: ModalProps) {
+function ModalAddFood({isOpen, onRequestClose, handleAddFood}: ModalProps) {
 
-  const { setIsOpen, handleAddFood } = this.props;
-  const formRef = createRef();
-
-  // constructor(props) {
-  //   super(props);
-
-  //   this.formRef = createRef();
-  // }
+  const formRef = useRef<FormHandles>(null);
 
   async function handleSubmit(data: any) {
     handleAddFood(data);
-    setIsOpen();
+    onRequestClose();
   };
 
   return (

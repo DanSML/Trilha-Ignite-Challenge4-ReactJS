@@ -6,7 +6,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onRequestClose, children }) => {
-
+  
   return (
     <ReactModal
       shouldCloseOnOverlayClick={!false}

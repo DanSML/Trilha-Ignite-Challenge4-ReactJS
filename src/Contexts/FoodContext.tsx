@@ -1,17 +1,34 @@
-import {ModalAddFood} from '../../components/ModalAddFood';
-import {ModalEditFood} from '../../components/ModalEditFood';
-import {Header} from '../../components/Header';
-import {Food} from '../../components/Food';
+import { createContext, useEffect, useState } from 'react'
 
-import api from '../../services/api';
-import { useState } from 'react';
+import api from '../services/api';
 
+export interface Foodie {
+  id: number,
+  name: string,
+  description: string,
+  price: number,
+  image: string
+}
 
-import { FoodsContainer } from './styles'
-import { useEffect } from 'react';
-import { Foodie } from '../../Contexts/FoodContext';
+interface AllContextProps {
+  foods: Foodie[],
+  editingFood: Foodie,
 
-function Dashboard() {
+  isModalOpen: boolean,
+  isEditModalOpen: boolean,
+
+  toggleModal: () => void,
+  toggleEditModal: () => void,
+
+  handleEditFood: (prop: Foodie) => void,
+  handleUpdateFood: (prop: Foodie) => void,
+  handleAddFood: (prop: Foodie) => void,
+  handleDeleteFood: (prop: number) => void,
+}
+
+export const FoodContext = createContext({} as AllContextProps);
+
+const FoodContextProvider: React.FC = ({children}) => {
   const [foods, setFoods] = useState<Foodie[]>([]);
   const [editingFood, setEditingFood] = useState<Foodie>({} as Foodie);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +40,7 @@ function Dashboard() {
       setFoods(response.data);
     }
     getFoods();
-  }, []);
+  }, [])
 
   async function handleAddFood(food:Foodie) {
     try {
@@ -84,33 +101,22 @@ function Dashboard() {
   }
 
   return (
-    <>
-      <Header openModal={toggleModal} />
-      <ModalAddFood
-        isOpen={isModalOpen}
-        onRequestClose={toggleModal}
-        handleAddFood={handleAddFood}
-      />
-      <ModalEditFood
-        isOpen={isEditModalOpen}
-        onRequestClose={toggleEditModal}
-        editingFood={editingFood}
-        handleUpdateFood={handleUpdateFood}
-      />
-
-      <FoodsContainer data-testid="foods-list">
-        {foods &&
-          foods.map(food => (
-            <Food
-              key={food.id}
-              food={food}
-              handleDeleteFood={handleDeleteFood}
-              handleEditFood={handleEditFood}
-            />
-          ))}
-      </FoodsContainer>
-    </>
+    <FoodContext.Provider 
+        value={{
+            foods, 
+            editingFood, 
+            isModalOpen, 
+            isEditModalOpen, 
+            toggleModal,
+            toggleEditModal,
+            handleUpdateFood,
+            handleAddFood,
+            handleDeleteFood,
+            handleEditFood,
+        }}>
+        {children}
+    </FoodContext.Provider >
   );
-};
+}
 
-export {Dashboard};
+export {FoodContextProvider};
